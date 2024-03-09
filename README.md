@@ -3,8 +3,8 @@ This is a generic implementation of the singly linked list data structure develo
 with linear time access to elements, and fixed time insertion/deletion at any point in the sequence. The methods provided by the forward list are fast and lightweight for a computer, Also this implementation
 is a powerful C alternative to the built-in template class std::forward_list in C++.
 
- Why do we need a generic implementation of a data structure in C language?
- A generic and reliable implementation of a data structure must satisfy the needs of user, saves time and effort and reduce complexity and confusion. Instead of implementing different versions of the same data 
- structure in order to store and manipulate data of different types.
+<h2> Why do we need a generic implementation of a data structure in C language? </h2>
+A generic and reliable implementation of a data structure must satisfy the needs of user, saves time and effort and reduce complexity and confusion. Instead of implementing different versions of the same data 
+structure in order to store and manipulate data of different types.
 
  
