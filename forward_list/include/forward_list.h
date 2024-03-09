@@ -226,7 +226,7 @@ extern void FWL_pop_front(Forward_List* __list);
  * required.
  *
  * Note that no data is returned, and if the first element's data
- * is needed, it should be retrieved before FWL_pop_front() is
+ * is needed, it should be retrieved before FWL_pop_back() is
  * called.
  */
 extern void FWL_pop_back(Forward_List* __list);
