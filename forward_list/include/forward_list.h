@@ -183,9 +183,6 @@ extern void* _FWL_back(Forward_List *__list);
     FWL_insert_after(_Tp, __list, FWL_rbegin(__list), __VA_ARGS__); \
 })
 
-/* Generic _FWL_push_front() */
-// extern void* _FWL_push_front(Forward_List* __list);
-
 /**
  * @brief  Add data to the front of the %forward_list.
  * @param _Tp      The data type used to initialize 
