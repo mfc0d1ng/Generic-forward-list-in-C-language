@@ -3,6 +3,7 @@
 #include <string.h>
 #include "include/forward_list.h"
 
+/* A comparison function for sorting a list of strings. */
 int compare(const void *__x, const void *__y)
 {
     return strcmp(*(char **)__x, *(char **)__y) > 0;
