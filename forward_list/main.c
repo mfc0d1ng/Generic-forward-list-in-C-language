@@ -75,7 +75,7 @@ int main(void)
     /* Sorts the elements in the %forward_list 'test3' */
     FWL_sort(&test3, compare);
 
-    /* Displays the data stored in the %forward_list 'test2' */
+    /* Displays the data stored in the %forward_list 'test3' */
     for(FWL_iterator it = FWL_begin(&test3); it != FWL_end(&test3); it = it->next)
     {
         printf(" \"%s\" -> ", *(char **)it->storage);
