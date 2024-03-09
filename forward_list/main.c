@@ -16,7 +16,7 @@ int main(void)
     Forward_List test = FWL_init(int, {0, 1, 2, 3, 4});
 
     /* Displays the data stored in the %forward_list 'test' */
-    for(FWL_iterator it = FWL_begin(&test); it != FWL_end(&test); it= it->next)
+    for(FWL_iterator it = FWL_begin(&test); it != FWL_end(&test); it = it->next)
     {
         printf(" %i -> ", *(int *)it->storage);
     }
@@ -36,7 +36,7 @@ int main(void)
     }
 
     /* Displays the data stored in the %forward_list 'test1' */
-    for(FWL_iterator it = FWL_begin(&test1); it != FWL_end(&test1); it= it->next)
+    for(FWL_iterator it = FWL_begin(&test1); it != FWL_end(&test1); it = it->next)
     {
         printf(" %.1f -> ", *(float *)it->storage);
     }
@@ -59,7 +59,7 @@ int main(void)
     }
 
     /* Displays the data stored in the %forward_list 'test2' */
-    for(FWL_iterator it = FWL_begin(&test2); it != FWL_end(&test2); it= it->next)
+    for(FWL_iterator it = FWL_begin(&test2); it != FWL_end(&test2); it = it->next)
     {
         printf(" '%c' -> ", *(char *)it->storage);
     }
@@ -76,7 +76,7 @@ int main(void)
     FWL_sort(&test3, compare);
 
     /* Displays the data stored in the %forward_list 'test2' */
-    for(FWL_iterator it = FWL_begin(&test3); it != FWL_end(&test3); it= it->next)
+    for(FWL_iterator it = FWL_begin(&test3); it != FWL_end(&test3); it = it->next)
     {
         printf(" \"%s\" -> ", *(char **)it->storage);
     }
