@@ -679,13 +679,14 @@ static void FWL_extend_list(Forward_List* __list, size_t __n)
 
 void FWL_resize(Forward_List* __list, size_t __n)
 {
-    if(__n == FWL_size(__list))
-    {
-        return;
-    }
     if(__n == 0)
     {
         FWL_clear(__list);
+        return;
+    }
+    if(FWL_size(__list) == __n)
+    {
+        return;
     }
     else if(FWL_size(__list) > __n)
     {
