@@ -351,7 +351,11 @@ void FWL_splice_after_range(Forward_List* __list, FWL_iterator __position, Forwa
 
 FWL_iterator FWL_erase_after(Forward_List* __list, FWL_iterator __before, FWL_iterator __last)
 {
-    if(FWL_empty(__list) || __before == __last)
+    if(__before == __last)
+    {
+        return __before;
+    }
+    if(FWL_empty(__list))
     {
         return NULL;
     }
