@@ -225,7 +225,7 @@ extern void FWL_pop_front(Forward_List* __list);
  * larger lists. user must consider using a doubly linked list if this
  * operation is heavily required.
  *
- * Note that no data is returned, and if the first element's data
+ * Note that no data is returned, and if the last element's data
  * is needed, it should be retrieved before FWL_pop_back() is
  * called.
  */
