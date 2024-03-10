@@ -399,7 +399,7 @@ size_t FWL_size(Forward_List* __list)
 
 void FWL_sort(Forward_List* __list, int (*__compare)(const void *, const void *))
 {
-    if (__list->start == FWL_end(__list) || __list->start->next == FWL_end(__list))
+    if (!__list->start || !__list->start->next)
     {
         return;
     }
