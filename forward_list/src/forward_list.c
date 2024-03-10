@@ -307,20 +307,54 @@ void FWL_splice_after_element(Forward_List* __list, FWL_iterator __position, For
 void FWL_splice_after_range(Forward_List* __list, FWL_iterator __position, Forward_List* __src_list, FWL_iterator __before, 
                                                                                                      FWL_iterator __last)
 {
-    if(FWL_empty(__src_list) || !__before || __before == __last)
+    if(FWL_empty(__src_list) || !__before || __before == __last || __before->next == __last)
     {
         return;
     }
-    while (__before->next != __last)
+    
+    Forward_List_Node* __start = __before->next;
+    Forward_List_Node* __end = __last;
+    Forward_List_Node* __it = __before->next;
+    
+    __before->next = __last;
+    if(__before->next == NULL)
     {
-        FWL_splice_after_element(__list, __position, __src_list, __before);
-        __position = __position->next;
+        if(__before == FWL_before_begin(__src_list))
+        {
+            __src_list->finish = __before->next;
+            __src_list->start = __before->next;
+        }
+        else
+        {
+            __src_list->finish = __before;
+        }
     }
+
+    size_t __i = 0;
+    while(__it->next != __end)
+    {
+        __it = __it->next;
+        ++__i;
+    }
+    __it->next = NULL;
+    __src_list->count -= __i+1;
+    
+    Forward_List __temp_list = {
+                                  .start = __start,
+                                  .finish = __it,
+                                  .count = 1+__i,
+                                  .size = __src_list->size
+                               };
+    FWL_splice_after_list(__list, __position, &__temp_list);
 }
 
 
 FWL_iterator FWL_erase_after(Forward_List* __list, FWL_iterator __before, FWL_iterator __last)
 {
+    if(FWL_empty(__list) || __before == __last)
+    {
+        return NULL;
+    }
     FWL_iterator _iter = __before;
     if(_iter == FWL_before_begin(__list))
     {
