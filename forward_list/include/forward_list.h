@@ -488,10 +488,6 @@ extern void FWL_swap(Forward_List* __list1, Forward_List* __list2);
  */
 extern void FWL_clear(Forward_List* __list);
 
-/* Truncates the %forward_list. */
-extern void FWL_truncate(Forward_List* __list, FWL_iterator __curr, 
-                                               FWL_iterator __prev);
-
 /* Initializes the %forward_list. */
 extern Forward_List FWL_Init(size_t);
 
