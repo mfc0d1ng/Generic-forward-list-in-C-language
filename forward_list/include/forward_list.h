@@ -2,7 +2,7 @@
  *  @brief A generic data container with linear time access to elements,
  *  and fixed time insertion/deletion at any point in the sequence.
  *
- *  @headerfile forward_list
+ *  @headerfile forward_list.h
  *
  *  This is a @e singly @e linked %list.  Traversal up the
  *  %list requires linear time, but adding and removing elements (or
