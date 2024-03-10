@@ -408,7 +408,7 @@ extern void _FWL_remove(Forward_List* __list, const void* __valuePtr, int (*__co
  * @param  ...          Value to be removed.
  *
  * Removes every element in the list equal to value according to comparison 
- * function. Remaining elements stay in %forward_list order.
+ * function. Remaining elements stay in list order.
  *
  * Note that this function only erases the elements, and that if the
  * elements themselves are pointers, the pointed-to memory is not 
@@ -425,7 +425,7 @@ extern void _FWL_remove(Forward_List* __list, const void* __valuePtr, int (*__co
  *
  *  Removes every element in the %forward_list for which 
  *  the predicate returns true. Remaining elements stay in 
- *  the %forward_list order.
+ *  list order.
  *  
  *  Note that this function only erases the elements, and that if 
  *  the elements themselves are pointers, the pointed-to memory is
