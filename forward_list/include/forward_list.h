@@ -220,10 +220,10 @@ extern void FWL_pop_front(Forward_List* __list);
  * @param __list Points to %forward_list object.
  *
  * This is a typical stack operation.  It shrinks the %forward_list
- * by one.  Due to the nature of a forward_list this operation is so
- * slow if it's frequently used specially with larger lists. user must
- * consider using a doubly linked list if this operation is heavily
- * required.
+ * by one.  Due to the nature of a %forward_list this operation slows 
+ * down the program execution if it's frequently used specially with 
+ * larger lists. user must consider using a doubly linked list if this
+ * operation is heavily required.
  *
  * Note that no data is returned, and if the first element's data
  * is needed, it should be retrieved before FWL_pop_back() is
@@ -368,7 +368,7 @@ extern size_t FWL_size(Forward_List* __list);
 
 /**
  * @brief  copy the %forward_list.
- * @param _Tp       The data type used to initialize 
+ * @param  _Tp      The data type used to initialize 
  *                  the %forward_list.
  * @param  __list   Reference to %forward_list object.
  * @return          Deep copy of a %forward_list object.
