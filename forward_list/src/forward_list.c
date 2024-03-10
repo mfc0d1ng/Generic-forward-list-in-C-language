@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "../include/forward_list.h"
 
-static void Exit(const char* __func_name)
+static void FWL_exit(const char* __func_name)
 {
     printf("%s : Out of memory\n", __func_name); 
     exit(EXIT_FAILURE);
@@ -166,7 +166,7 @@ FWL_iterator _FWL_insert_after(Forward_List* __list, FWL_iterator __position, vo
     Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
     if(__node == NULL)
     {
-        Exit("_FWL_insert_after()");
+        FWL_exit("_FWL_insert_after()");
     }
     else
     {
