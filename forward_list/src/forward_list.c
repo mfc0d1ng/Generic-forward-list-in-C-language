@@ -571,7 +571,7 @@ void FWL_unique(Forward_List* __list, int (*__compare)(const void *, const void 
 void FWL_reverse(Forward_List* __list)
 {
     Forward_List_Node* current = FWL_begin(__list);
-    if(!__list->start|| !__list->start->next)
+    if(!current || !current->next)
     {
         return;
     }
@@ -589,6 +589,20 @@ void FWL_reverse(Forward_List* __list)
     __list->finish = start;
 }
 
+
+static void FWL_truncate(Forward_List* __list, FWL_iterator __curr, FWL_iterator __prev)
+{
+    Forward_List_Node* __temp = NULL;
+    while (__curr != NULL)
+    {
+        __temp = __curr;
+        __curr = __curr->next;
+        free(__temp);
+        --__list->count;
+    }
+    __list->finish = __prev;
+    __list->finish->next = NULL;
+}
 
 static void FWL_shrink_list(Forward_List* __list, size_t __n)
 {
@@ -666,28 +680,13 @@ void FWL_clear(Forward_List* __list)
         return;
     }
     Forward_List_Node* __temp = NULL;
-    for (Forward_List_Node* __it = __list->start; __it != NULL; )
+    for (Forward_List_Node* __it = FWL_begin(__list); __it != NULL; )
     {
         __temp = __it;
         __it = __it->next;
         free(__temp);
     }
     FWL_reset(__list);
-}
-
-
-void FWL_truncate(Forward_List* __list, FWL_iterator __curr, FWL_iterator __prev)
-{
-    Forward_List_Node* __temp = NULL;
-    while (__curr != NULL)
-    {
-        __temp = __curr;
-        __curr = __curr->next;
-        free(__temp);
-        --__list->count;
-    }
-    __list->finish = __prev;
-    __list->finish->next = NULL;
 }
 
 
