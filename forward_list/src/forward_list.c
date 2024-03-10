@@ -521,7 +521,7 @@ void FWL_sort(Forward_List* __list, int (*__compare)(const void *, const void *)
 
 void _FWL_remove(Forward_List* __list, const void* __valuePtr, int (*__compare)(const void *, const void *))
 {
-    if(__list->start == NULL)
+    if(FWL_empty(__list))
     {
         return;
     }
@@ -550,7 +550,7 @@ void _FWL_remove(Forward_List* __list, const void* __valuePtr, int (*__compare)(
 
 void FWL_remove_if(Forward_List* __list, int (*__predicate)(const void *))
 {
-    if(__list->start == NULL)
+    if(FWL_empty(__list))
     {
         return;
     }
