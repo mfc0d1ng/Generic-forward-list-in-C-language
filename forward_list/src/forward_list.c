@@ -117,6 +117,23 @@ FWL_iterator FWL_pop_after(Forward_List* __list, FWL_iterator __position)
     return __ret;
 }
 
+static void FWL_exit(const char* __func_name)
+{
+    printf("%s : Out of memory\n", __func_name); 
+    exit(EXIT_FAILURE);
+}
+
+static Forward_List_Node* FWL_create_node(Forward_List* __list)
+{
+    Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
+    if(!__node)
+    {
+        FWL_clear(__list);
+        FWL_exit("FWL_create_node()");
+    }
+    return __node;
+}
+
 static void FWL_init_list(Forward_List* __list, Forward_List_Node* __node)
 {
     __node->next = NULL;
@@ -138,23 +155,6 @@ static void __FWL_insert_after(Forward_List* __list, FWL_iterator __position, Fo
         __list->finish = __node;
     }
     __position->next = __node;
-}
-
-static void FWL_exit(const char* __func_name)
-{
-    printf("%s : Out of memory\n", __func_name); 
-    exit(EXIT_FAILURE);
-}
-
-static Forward_List_Node* FWL_create_node(Forward_List* __list)
-{
-    Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
-    if(!__node)
-    {
-        FWL_clear(__list);
-        FWL_exit("FWL_create_node()");
-    }
-    return __node;
 }
 
 FWL_iterator _FWL_insert_after(Forward_List* __list, FWL_iterator __position, void** __storage)
