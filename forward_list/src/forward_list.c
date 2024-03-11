@@ -2,19 +2,6 @@
 #include <stdlib.h>
 #include "../include/forward_list.h"
 
-static void FWL_exit(const char* __func_name)
-{
-    printf("%s : Out of memory\n", __func_name); 
-    exit(EXIT_FAILURE);
-}
-
-static void FWL_reset(Forward_List* __list)
-{
-    __list->start = NULL;
-    __list->finish = NULL;
-    __list->count = 0;
-}
-
 FWL_iterator FWL_advance(FWL_iterator __current, size_t __n)
 {
     for(; __n; --__n)
@@ -153,6 +140,12 @@ static void __FWL_insert_after(Forward_List* __list, FWL_iterator __position, Fo
     __position->next = __node;
 }
 
+static void FWL_exit(const char* __func_name)
+{
+    printf("%s : Out of memory\n", __func_name); 
+    exit(EXIT_FAILURE);
+}
+
 static Forward_List_Node* FWL_create_node(Forward_List* __list)
 {
     Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
@@ -185,6 +178,13 @@ FWL_iterator _FWL_insert_after(Forward_List* __list, FWL_iterator __position, vo
     *__storage = __node->storage;
     ++__list->count;
     return __node;
+}
+
+static void FWL_reset(Forward_List* __list)
+{
+    __list->start = NULL;
+    __list->finish = NULL;
+    __list->count = 0;
 }
 
 void FWL_splice_after_list(Forward_List* __list, FWL_iterator __position, Forward_List* __src_list)
