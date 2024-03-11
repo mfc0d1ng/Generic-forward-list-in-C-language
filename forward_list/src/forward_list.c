@@ -153,7 +153,7 @@ static void __FWL_insert_after(Forward_List* __list, FWL_iterator __position, Fo
     __position->next = __node;
 }
 
-static Forward_List_Node *FWL_create_node(Forward_List* __list)
+static Forward_List_Node* FWL_create_node(Forward_List* __list)
 {
     Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
     if(!__node)
