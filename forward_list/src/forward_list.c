@@ -349,19 +349,19 @@ FWL_iterator FWL_erase_after(Forward_List* __list, FWL_iterator __before, FWL_it
     {
         return NULL;
     }
-    FWL_iterator _iter = __before;
-    if(_iter == FWL_before_begin(__list))
+    FWL_iterator __it = __before;
+    if(__it == FWL_before_begin(__list))
     {
         while (__list->start != __last)
         {
-            FWL_pop_after(__list, _iter);
+            FWL_pop_after(__list, __it);
         }
     }
     else
     {
-        while (_iter->next != __last)
+        while (__it->next != __last)
         {
-            FWL_pop_after(__list, _iter);
+            FWL_pop_after(__list, __it);
         }
     }
     return __last;
