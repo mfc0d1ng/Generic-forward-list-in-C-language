@@ -23,7 +23,6 @@ FWL_iterator FWL_before_begin(Forward_List* __list)
     return (FWL_iterator) &__list->start;
 }
 
-
 FWL_iterator FWL_begin(Forward_List* __list)
 {
     return __list->start;
