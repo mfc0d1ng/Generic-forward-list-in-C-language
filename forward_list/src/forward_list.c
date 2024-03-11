@@ -8,14 +8,12 @@ static void FWL_exit(const char* __func_name)
     exit(EXIT_FAILURE);
 }
 
-
 static void FWL_reset(Forward_List* __list)
 {
     __list->start = NULL;
     __list->finish = NULL;
     __list->count = 0;
 }
-
 
 FWL_iterator FWL_advance(FWL_iterator __current, size_t __n)
 {
@@ -32,7 +30,6 @@ FWL_iterator FWL_advance(FWL_iterator __current, size_t __n)
     }
     return __current;
 }
-
 
 FWL_iterator FWL_before_begin(Forward_List* __list)
 {
@@ -72,18 +69,15 @@ void* _FWL_back(Forward_List* __list)
     return FWL_rbegin(__list)->storage;
 }
 
-
 void FWL_pop_front(Forward_List* __list)
 {
     FWL_pop_after(__list, FWL_before_begin(__list));
 }
 
-
 void FWL_pop_back(Forward_List* __list)
 {
     FWL_pop_after(__list, FWL_advance(FWL_before_begin(__list), FWL_size(__list)-1));
 }
-
 
 static FWL_iterator FWL_pop_first_element(Forward_List* __list)
 {
@@ -100,8 +94,8 @@ static FWL_iterator FWL_pop_first_element(Forward_List* __list)
 static void FWL_pop_last_element(Forward_List* __list, FWL_iterator __position)
 {
     free(__list->finish);
-    __list->finish = __position;
     __position->next = NULL;
+    __list->finish = __position;
 }
 
 static FWL_iterator FWL_pop_next_element(FWL_iterator __position)
@@ -111,7 +105,6 @@ static FWL_iterator FWL_pop_next_element(FWL_iterator __position)
         free(__temp);
         return __position;
 }
-
 
 FWL_iterator FWL_pop_after(Forward_List* __list, FWL_iterator __position)
 {
@@ -150,7 +143,7 @@ static void FWL_insert_before_begin(Forward_List* __list, Forward_List_Node* __n
     __list->start = __node;
 }
 
-static void __FWL_insert_after(Forward_List* __list, Forward_List_Node* __node, FWL_iterator __position)
+static void __FWL_insert_after(Forward_List* __list, FWL_iterator __position, Forward_List_Node* __node)
 {
     __node->next = __position->next;
     if(__node->next == NULL)
@@ -160,37 +153,39 @@ static void __FWL_insert_after(Forward_List* __list, Forward_List_Node* __node, 
     __position->next = __node;
 }
 
+static Forward_List_Node *FWL_create_node(Forward_List* __list)
+{
+    Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
+    if(!__node)
+    {
+        FWL_clear(__list);
+        FWL_exit("FWL_create_node()");
+    }
+    return __node;
+}
 
 FWL_iterator _FWL_insert_after(Forward_List* __list, FWL_iterator __position, void** __storage)
 {
-    Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
-    if(__node == NULL)
+    Forward_List_Node* __node = FWL_create_node(__list);
+    if(__list->start == NULL)
     {
-        FWL_exit("_FWL_insert_after()");
+        FWL_init_list(__list, __node);
     }
     else
     {
-        if(__list->start == NULL)
+        if(__position == FWL_before_begin(__list))
         {
-            FWL_init_list(__list, __node);
+            FWL_insert_before_begin(__list, __node);
         }
         else
         {
-            if(__position == FWL_before_begin(__list))
-            {
-                FWL_insert_before_begin(__list, __node);
-            }
-            else
-            {
-                __FWL_insert_after(__list, __node, __position);
-            }
+            __FWL_insert_after(__list, __position, __node);
         }
     }
     *__storage = __node->storage;
     ++__list->count;
     return __node;
 }
-
 
 void FWL_splice_after_list(Forward_List* __list, FWL_iterator __position, Forward_List* __src_list)
 {
@@ -223,7 +218,6 @@ void FWL_splice_after_list(Forward_List* __list, FWL_iterator __position, Forwar
 
     FWL_reset(__src_list);
 }
-
 
 static Forward_List_Node* FWL_unlink_node(Forward_List* __src_list, FWL_iterator __i)
 {
@@ -261,7 +255,6 @@ static Forward_List_Node* FWL_unlink_node(Forward_List* __src_list, FWL_iterator
     return __node;
 }
 
-
 static void FWL_splice_node(Forward_List* __list, FWL_iterator __position, Forward_List_Node* __node)
 {
     if(!__node)
@@ -279,7 +272,7 @@ static void FWL_splice_node(Forward_List* __list, FWL_iterator __position, Forwa
         __node->next = __list->start;
         __list->start = __node;
     }
-    else if(__position == __list->finish)
+    else if(__position ==  FWL_rbegin(__list))
     {
         __node->next = NULL;
         __list->finish->next = __node;
@@ -293,7 +286,6 @@ static void FWL_splice_node(Forward_List* __list, FWL_iterator __position, Forwa
     ++__list->count;
 }
 
-
 void FWL_splice_after_element(Forward_List* __list, FWL_iterator __position, Forward_List* __src_list, FWL_iterator __i)
 {
     if(!__position || !__i)
@@ -302,7 +294,6 @@ void FWL_splice_after_element(Forward_List* __list, FWL_iterator __position, For
     }
     FWL_splice_node(__list, __position, FWL_unlink_node(__src_list, __i));
 }
-
 
 void FWL_splice_after_range(Forward_List* __list, FWL_iterator __position, Forward_List* __src_list, FWL_iterator __before, 
                                                                                                      FWL_iterator __last)
@@ -348,7 +339,6 @@ void FWL_splice_after_range(Forward_List* __list, FWL_iterator __position, Forwa
     FWL_splice_after_list(__list, __position, &__temp_list);
 }
 
-
 FWL_iterator FWL_erase_after(Forward_List* __list, FWL_iterator __before, FWL_iterator __last)
 {
     if(__before == __last)
@@ -377,7 +367,6 @@ FWL_iterator FWL_erase_after(Forward_List* __list, FWL_iterator __before, FWL_it
     return __last;
 }
 
-
 int FWL_empty(Forward_List* __list)
 {
     if(__list->start == NULL)
@@ -390,12 +379,10 @@ int FWL_empty(Forward_List* __list)
     }
 }
 
-
 size_t FWL_size(Forward_List* __list)
 {
     return __list->count;
 }
-
 
 void FWL_sort(Forward_List* __list, int (*__compare)(const void *, const void *))
 {
@@ -522,7 +509,6 @@ void FWL_sort(Forward_List* __list, int (*__compare)(const void *, const void *)
     __list->finish = end2;
 }
 
-
 void _FWL_remove(Forward_List* __list, const void* __valuePtr, int (*__compare)(const void *, const void *))
 {
     if(FWL_empty(__list))
@@ -550,7 +536,6 @@ void _FWL_remove(Forward_List* __list, const void* __valuePtr, int (*__compare)(
         FWL_pop_front(__list);
     }
 }
-
 
 void FWL_remove_if(Forward_List* __list, int (*__predicate)(const void *))
 {
@@ -580,7 +565,6 @@ void FWL_remove_if(Forward_List* __list, int (*__predicate)(const void *))
     }
 }
 
-
 void FWL_unique(Forward_List* __list, int (*__compare)(const void *, const void *))
 {
     if(!__list->start || !__list->start->next)
@@ -605,7 +589,6 @@ void FWL_unique(Forward_List* __list, int (*__compare)(const void *, const void 
     }
 }
 
-
 void FWL_reverse(Forward_List* __list)
 {
     Forward_List_Node* current = FWL_begin(__list);
@@ -626,7 +609,6 @@ void FWL_reverse(Forward_List* __list)
     __list->start = prev;
     __list->finish = start;
 }
-
 
 static void FWL_truncate(Forward_List* __list, FWL_iterator __curr, FWL_iterator __prev)
 {
@@ -659,23 +641,26 @@ static void FWL_shrink_list(Forward_List* __list, size_t __n)
 
 static void FWL_extend_list(Forward_List* __list, size_t __n)
 {
-    void* temp = NULL;
+    Forward_List_Node *__node = NULL;
     if(FWL_empty(__list))
     {
         while (__list->count < __n)
         {
-            _FWL_insert_after(__list, FWL_before_begin(__list), &temp);
+            __node = FWL_create_node(__list);
+            __FWL_insert_after(__list, FWL_before_begin(__list), __node);
+            ++__list->count;
         }
     }
     else
     {
         while (__list->count < __n)
         {
-            _FWL_insert_after(__list, FWL_rbegin(__list), &temp);
+            __node = FWL_create_node(__list);
+            __FWL_insert_after(__list, FWL_rbegin(__list), __node);
+            ++__list->count;
         }
     }
 }
-
 
 void FWL_resize(Forward_List* __list, size_t __n)
 {
@@ -698,7 +683,6 @@ void FWL_resize(Forward_List* __list, size_t __n)
     }
 }
 
-
 void FWL_swap(Forward_List* __list1, Forward_List* __list2)
 {
     if(__list1->size != __list2->size)
@@ -710,7 +694,6 @@ void FWL_swap(Forward_List* __list1, Forward_List* __list2)
     *__list1 = *__list2;
     *__list2 = __temp;
 }
-
 
 void FWL_clear(Forward_List* __list)
 {
@@ -727,7 +710,6 @@ void FWL_clear(Forward_List* __list)
     }
     FWL_reset(__list);
 }
-
 
 Forward_List FWL_Init(size_t __size)
 {
