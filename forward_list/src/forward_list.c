@@ -128,7 +128,7 @@ static Forward_List_Node* FWL_get_node(Forward_List* __list)
     if(!__node)
     {
         FWL_clear(__list);
-        FWL_exit("FWL_create_node()");
+        FWL_exit("FWL_get_node()");
     }
     return __node;
 }
