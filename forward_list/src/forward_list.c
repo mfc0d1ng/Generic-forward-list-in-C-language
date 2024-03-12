@@ -646,7 +646,7 @@ static void FWL_extend_list(Forward_List* __list, size_t __n)
     }
     else
     {
-        while (; __list->count < __n; ++__list->count)
+        for (; __list->count < __n; ++__list->count)
         {
             __node = FWL_get_node(__list);
             __FWL_insert_after(__list, FWL_rbegin(__list), __node);
