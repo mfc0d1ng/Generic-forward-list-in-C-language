@@ -385,12 +385,7 @@ size_t FWL_size(Forward_List* __list)
 
 void FWL_sort(Forward_List* __list, int (*__compare)(const void *, const void *))
 {
-    if (!__list->start || !__list->start->next)
-    {
-        return;
-    }
-
-    if(__compare == NULL)
+    if (!__list->start || !__list->start->next || !__compare)
     {
         return;
     }
@@ -646,7 +641,7 @@ static void FWL_extend_list(Forward_List* __list, size_t __n)
         while (__list->count < __n)
         {
             __node = FWL_create_node(__list);
-            __FWL_insert_after(__list, FWL_before_begin(__list), __node);
+            FWL_insert_before_begin(__list, __node);
             ++__list->count;
         }
     }
