@@ -122,7 +122,7 @@ static void FWL_exit(const char* __func_name)
     exit(EXIT_FAILURE);
 }
 
-static Forward_List_Node* FWL_create_node(Forward_List* __list)
+static Forward_List_Node* FWL_get_node(Forward_List* __list)
 {
     Forward_List_Node* __node = (Forward_List_Node*) calloc(1, sizeof(Forward_List_Node*) + __list->size);
     if(!__node)
@@ -158,7 +158,7 @@ static void __FWL_insert_after(Forward_List* __list, FWL_iterator __position, Fo
 
 FWL_iterator _FWL_insert_after(Forward_List* __list, FWL_iterator __position, void** __storage)
 {
-    Forward_List_Node* __node = FWL_create_node(__list);
+    Forward_List_Node* __node = FWL_get_node(__list);
     if(__list->start == NULL)
     {
         FWL_init_list(__list, __node);
@@ -638,20 +638,18 @@ static void FWL_extend_list(Forward_List* __list, size_t __n)
     Forward_List_Node *__node = NULL;
     if(FWL_empty(__list))
     {
-        while (__list->count < __n)
+        for (; __list->count < __n; ++__list->count)
         {
-            __node = FWL_create_node(__list);
-            FWL_insert_before_begin(__list, __node);
-            ++__list->count;
+            __node = FWL_get_node(__list);
+            FWL_insert_before_begin(__list, __node);   
         }
     }
     else
     {
-        while (__list->count < __n)
+        while (; __list->count < __n; ++__list->count)
         {
-            __node = FWL_create_node(__list);
+            __node = FWL_get_node(__list);
             __FWL_insert_after(__list, FWL_rbegin(__list), __node);
-            ++__list->count;
         }
     }
 }
