@@ -607,12 +607,11 @@ void FWL_reverse(Forward_List* __list)
 static void FWL_truncate(Forward_List* __list, FWL_iterator __curr, FWL_iterator __prev)
 {
     Forward_List_Node* __temp = NULL;
-    while (__curr != NULL)
+    for (; __curr != NULL; --__list->count)
     {
         __temp = __curr;
         __curr = __curr->next;
         free(__temp);
-        --__list->count;
     }
     __list->finish = __prev;
     __list->finish->next = NULL;
