@@ -55,16 +55,6 @@ void* _FWL_back(Forward_List* __list)
     return FWL_rbegin(__list)->storage;
 }
 
-void FWL_pop_front(Forward_List* __list)
-{
-    FWL_pop_after(__list, FWL_before_begin(__list));
-}
-
-void FWL_pop_back(Forward_List* __list)
-{
-    FWL_pop_after(__list, FWL_advance(FWL_before_begin(__list), FWL_size(__list)-1));
-}
-
 static FWL_iterator FWL_pop_first_element(Forward_List* __list)
 {
     Forward_List_Node* __temp = __list->start;
@@ -75,6 +65,20 @@ static FWL_iterator FWL_pop_first_element(Forward_List* __list)
     }
     free(__temp);
     return __list->start;
+}
+
+void FWL_pop_front(Forward_List* __list)
+{
+    if(__list->start)
+    {
+        FWL_pop_first_element(__list);
+        --__list->count;
+    }
+}
+
+void FWL_pop_back(Forward_List* __list)
+{
+    FWL_pop_after(__list, FWL_advance(FWL_before_begin(__list), FWL_size(__list)-1));
 }
 
 static void FWL_pop_last_element(Forward_List* __list, FWL_iterator __position)
