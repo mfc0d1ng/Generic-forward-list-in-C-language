@@ -369,7 +369,7 @@ extern size_t FWL_size(Forward_List* __list);
  * @param  _Tp      The data type used to initialize 
  *                  the %forward_list.
  * @param  __list   Reference to %forward_list object.
- * @return          Deep copy of a %forward_list object.
+ * @return Deep copy of a %forward_list object.
  */
 #define FWL_copy(_Tp, __list)({                          \
     Forward_List __cp = FWL_init(_Tp, {});               \
