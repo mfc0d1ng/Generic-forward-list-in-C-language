@@ -266,26 +266,16 @@ static void FWL_splice_node(Forward_List* __list, FWL_iterator __position, Forwa
     }
     if(__list->start == NULL)
     {
-        __node->next = NULL;
-        __list->start =  __node;
-        __list->finish = __node;
+        FWL_init_list(__list, __node);
     }
     else if(__position == FWL_before_begin(__list))
     {
-        __node->next = __list->start;
-        __list->start = __node;
-    }
-    else if(__position ==  FWL_rbegin(__list))
-    {
-        __node->next = NULL;
-        __list->finish->next = __node;
-        __list->finish = __node;
+        FWL_insert_before_begin(__list, __node);
     }
     else
     {
-        __node->next = __position->next;
-        __position->next = __node;
-    }
+		__FWL_insert_after(__list, __position, __node);
+	}
     ++__list->count;
 }
 
