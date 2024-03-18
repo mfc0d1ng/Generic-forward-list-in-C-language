@@ -274,8 +274,8 @@ static void FWL_splice_node(Forward_List* __list, FWL_iterator __position, Forwa
     }
     else
     {
-		__FWL_insert_after(__list, __position, __node);
-	}
+	__FWL_insert_after(__list, __position, __node);
+    }
     ++__list->count;
 }
 
