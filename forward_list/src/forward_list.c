@@ -233,7 +233,6 @@ static Forward_List_Node* FWL_unlink_node(Forward_List* __src_list, FWL_iterator
     {
         return NULL;
     }
-
     if(__i == FWL_before_begin(__src_list))
     {
         __src_list->start = __src_list->start->next;
@@ -295,11 +294,9 @@ void FWL_splice_after_range(Forward_List* __list, FWL_iterator __position, Forwa
     {
         return;
     }
-    
     Forward_List_Node* __start = __before->next;
     Forward_List_Node* __end = __last;
     Forward_List_Node* __it = __before->next;
-    
     __before->next = __last;
     if(__before->next == NULL)
     {
@@ -313,7 +310,6 @@ void FWL_splice_after_range(Forward_List* __list, FWL_iterator __position, Forwa
             __src_list->finish = __before;
         }
     }
-
     size_t __i = 0;
     while(__it->next != __end)
     {
@@ -322,7 +318,6 @@ void FWL_splice_after_range(Forward_List* __list, FWL_iterator __position, Forwa
     }
     __it->next = NULL;
     __src_list->count -= __i+1;
-    
     Forward_List __temp_list = {
                                   .start = __start,
                                   .finish = __it,
