@@ -16,7 +16,7 @@
  *  linked lists, such as splicing, sorting, and in-place reversal.
  *  
  *  Unlike the std::forward_list in C++ this implementation provides
- *  a method for adding elements at the end of the list.
+ *  extra methods such as FWL_push_back(), FWL_back(), FWL_size().
  *  
  *  @file forward_list.h
  *  @author Mohamed fareed.
