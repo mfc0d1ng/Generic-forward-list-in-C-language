@@ -494,57 +494,45 @@ void FWL_sort(Forward_List* __list, int (*__compare)(const void *, const void *)
 
 void _FWL_remove(Forward_List* __list, const void* __valuePtr, int (*__compare)(const void *, const void *))
 {
-    if(FWL_empty(__list))
+    if(!FWL_empty(__list))
     {
-        return;
-    }
-    Forward_List_Node* __it = __list->start;
-    while (__it->next != NULL)
-    {
-        if(__compare(__valuePtr, __it->next->storage))
-        {
-            __it = FWL_pop_after(__list, __it);
+    	for (FWL_iterator __it = FWL_begin(__list); __it && __it->next != NULL; )
+    	{
+	    if(__compare(__valuePtr, __it->next->storage))
+	    {
+		__it = FWL_pop_after(__list, __it);
+	    }
+	    else
+	    {
+	    	__it = __it->next;
+	    }
         }
-        else
-        {
-            __it = __it->next;
-        }
-        if(__it == NULL)
-        {
-            break;
-        }
-    }
-    if(__compare(__valuePtr, __list->start->storage))
-    {
-        FWL_pop_front(__list);
+    	if(__compare(__valuePtr, __list->start->storage))
+    	{
+	    FWL_pop_front(__list);
+    	}    
     }
 }
 
 void FWL_remove_if(Forward_List* __list, int (*__predicate)(const void *))
 {
-    if(FWL_empty(__list))
+    if(!FWL_empty(__list))
     {
-        return;
-    }
-    Forward_List_Node* __it = __list->start;
-    while (__it->next != NULL)
-    {
-        if(__predicate(__it->next->storage))
-        {
-            __it = FWL_pop_after(__list, __it);
+    	for (FWL_iterator __it = FWL_begin(__list); __it && __it->next != NULL; )
+    	{
+	    if(__predicate(__it->next->storage))
+	    {
+	    	__it = FWL_pop_after(__list, __it);
+	    }
+	    else
+	    {
+	    	__it = __it->next;
+	    }
         }
-        else
-        {
-            __it = __it->next;
-        }
-        if(__it == NULL)
-        {
-            break;
-        }
-    }
-    if(__predicate(__list->start->storage))
-    {
-        FWL_pop_front(__list);
+    	if(__predicate(__list->start->storage))
+    	{
+	    FWL_pop_front(__list);
+    	}
     }
 }
 
@@ -554,8 +542,7 @@ void FWL_unique(Forward_List* __list, int (*__compare)(const void *, const void 
     {
         return;
     }
-    Forward_List_Node* __it = __list->start;
-    while (__it->next != NULL)
+    for (FWL_iterator __it = FWL_begin(__list); __it && __it->next != NULL; )
     {
         if(__compare(__it->storage, __it->next->storage))
         {
@@ -564,10 +551,6 @@ void FWL_unique(Forward_List* __list, int (*__compare)(const void *, const void 
         else
         {
             __it = __it->next;
-        }
-        if(__it == NULL)
-        {
-            break;
         }
     }
 }
