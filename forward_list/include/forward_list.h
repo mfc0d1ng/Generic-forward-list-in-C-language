@@ -2,7 +2,7 @@
  *  @brief A generic data container with linear time access to elements,
  *  and fixed time insertion/deletion at any point in the sequence.
  *
- *  @headerfile forward_list.h
+ *  @tparam _Tp  Type of element.
  *
  *  This is a @e singly @e linked %list.  Traversal up the
  *  %list requires linear time, but adding and removing elements (or
@@ -17,7 +17,8 @@
  *  
  *  Unlike the std::forward_list in C++ this implementation provides
  *  a method for adding elements at the end of the list.
- * 
+ *  
+ *  @file forward_list.h
  *  @author Mohamed fareed.
  */
 
