@@ -15,9 +15,6 @@
  *  Also the forward_list provides specialized algorithms %unique to 
  *  linked lists, such as splicing, sorting, and in-place reversal.
  *  
- *  Unlike the std::forward_list in C++ this implementation provides
- *  extra methods such as FWL_push_back(), FWL_back(), FWL_size().
- *  
  *  @file forward_list.h
  *  @author Mohamed fareed.
  */
