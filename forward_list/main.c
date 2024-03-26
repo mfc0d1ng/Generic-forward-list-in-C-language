@@ -30,7 +30,7 @@ int main(void)
     /* Initializes the %forward_list 'test1' */
     Forward_List test1 = FWL_init(float, {1.5, 2});
 
-    /* Add the values of variable i to the end of the %forward_list 'test1' */
+    /* Add the values of variable i sequentially to the end of the %forward_list 'test1' */
     for (float i = 2.5; i <= 3.5; i+=0.5)
     {
         FWL_push_back(float, &test1, i);
