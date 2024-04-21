@@ -363,7 +363,7 @@ extern int FWL_empty(Forward_List* __list);
 extern size_t FWL_size(Forward_List* __list);
 
 /**
- * @brief  copy the %forward_list.
+ * @brief  Copy the %forward_list.
  * @param  _Tp      The data type used to initialize 
  *                  the %forward_list.
  * @param  __list   Reference to %forward_list object.
